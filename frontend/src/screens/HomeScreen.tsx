@@ -3,6 +3,7 @@ import { useEffect, useReducer } from "react";
 import { Col, Row } from "react-bootstrap";
 import logger from "use-reducer-logger";
 import Product from "../components/Product";
+import { Helmet } from "react-helmet-async";
 
 type ProductType = {
   name: string;
@@ -61,6 +62,9 @@ function HomeScreen() {
 
   return (
     <div>
+      <Helmet>
+        <title>Amazona</title>
+      </Helmet>
       <h1>Feutured produtcs</h1>
       <div className="products">
         {loading ? (
