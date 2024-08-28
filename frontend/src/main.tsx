@@ -5,13 +5,16 @@ import App from "./App.tsx";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./index.css";
 import { HelmetProvider } from "react-helmet-async";
+import { StoreProvider } from "./Store.tsx";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <HelmetProvider>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-    </HelmetProvider>
+    <StoreProvider>
+      <HelmetProvider>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </HelmetProvider>
+    </StoreProvider>
   </StrictMode>
 );
