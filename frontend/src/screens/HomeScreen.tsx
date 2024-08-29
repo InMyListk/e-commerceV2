@@ -9,6 +9,7 @@ import MessageBox from "../components/MessageBox";
 import { getError } from "../utils";
 
 type ProductType = {
+  _id: number;
   name: string;
   slug: string;
   category: string;
