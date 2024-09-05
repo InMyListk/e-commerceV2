@@ -56,7 +56,7 @@ const ProductScreen = () => {
     const fetchData = async () => {
       try {
         dispatch({ type: "FETCH_REQUEST" });
-        const result = await axios(`/api/product/slug/${slug}`);
+        const result = await axios(`/api/products/slug/${slug}`);
         dispatch({ type: "FETCH_SUCCESS", payload: result.data });
       } catch (error: any) {
         dispatch({ type: "FETCH_FAILED", payload: getError(error) });
