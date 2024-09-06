@@ -1,9 +1,10 @@
-import express, { NextFunction, Request, Response } from "express";
+import express, { Errback, NextFunction, Request, Response } from "express";
 import { data } from "./data";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import { productRouter } from "./routes/productRoutes";
 import { seedRouter } from "./routes/seedRoutes";
+import { userRouter } from "./routes/userRoutes";
 
 dotenv.config();
 
@@ -18,8 +19,16 @@ mongoose
 
 const app = express();
 
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
 app.use("/api/seed", seedRouter);
 app.use("/api/products", productRouter);
+app.use("/api/users", userRouter);
+
+app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
+  res.status(500).send({ message: err.message });
+});
 
 const port = process.env.port || 5000;
 
