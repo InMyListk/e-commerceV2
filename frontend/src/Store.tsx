@@ -1,12 +1,18 @@
 import { createContext, useReducer, Dispatch } from "react";
 
 type StateType = {
+  userInfo: any;
   cart: {
     cartItems: any[];
   };
 };
 
 const initialState: StateType = {
+  userInfo: {
+    cartItems: localStorage.getItem("userInfo")
+      ? JSON.parse(localStorage.getItem("userInfo") as string)
+      : null,
+  },
   cart: {
     cartItems: localStorage.getItem("cartItems")
       ? JSON.parse(localStorage.getItem("cartItems") as string)
@@ -43,6 +49,12 @@ const reducer = (state: StateType, action: ActionType): StateType => {
       );
       localStorage.setItem("cartItems", JSON.stringify(cartItems));
       return { ...state, cart: { ...state.cart, cartItems } };
+    }
+    case "USER_SIGNIN": {
+      return { ...state, userInfo: action.payload };
+    }
+    case "USER_SIGNOUT": {
+      return { ...state, userInfo: null };
     }
     default:
       return state;
