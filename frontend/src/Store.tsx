@@ -1,8 +1,17 @@
 import { createContext, useReducer, Dispatch } from "react";
 
+type ShippingAddressType = {
+  fullName: string;
+  address: string;
+  postalCode: string;
+  city: string;
+  country: string;
+};
+
 type StateType = {
   userInfo: any;
   cart: {
+    shippingAddress: ShippingAddressType | any;
     cartItems: any[];
   };
 };
@@ -14,6 +23,9 @@ const initialState: StateType = {
       : null,
   },
   cart: {
+    shippingAddress: localStorage.getItem("shippingAddress")
+      ? JSON.parse(localStorage.getItem("shippingAddress") as string)
+      : {},
     cartItems: localStorage.getItem("cartItems")
       ? JSON.parse(localStorage.getItem("cartItems") as string)
       : [],
@@ -54,7 +66,23 @@ const reducer = (state: StateType, action: ActionType): StateType => {
       return { ...state, userInfo: action.payload };
     }
     case "USER_SIGNOUT": {
-      return { ...state, userInfo: null };
+      return {
+        ...state,
+        userInfo: null,
+        cart: {
+          shippingAddress: {},
+          cartItems: [],
+        },
+      };
+    }
+    case "SAVE_SHIPPING_ADDRESS": {
+      return {
+        ...state,
+        cart: {
+          ...state.cart,
+          shippingAddress: action.payload,
+        },
+      };
     }
     default:
       return state;
