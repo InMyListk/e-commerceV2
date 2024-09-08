@@ -13,6 +13,7 @@ type StateType = {
   cart: {
     shippingAddress: ShippingAddressType | any;
     cartItems: any[];
+    paymentMethod: "PayPal" | "Stripe" | "";
   };
 };
 
@@ -27,6 +28,9 @@ const initialState: StateType = {
     cartItems: localStorage.getItem("cartItems")
       ? JSON.parse(localStorage.getItem("cartItems") as string)
       : [],
+    paymentMethod: localStorage.getItem("paymentMethod")
+      ? JSON.parse(localStorage.getItem("paymentMethod") as string)
+      : "",
   },
 };
 
@@ -70,6 +74,7 @@ const reducer = (state: StateType, action: ActionType): StateType => {
         cart: {
           shippingAddress: {},
           cartItems: [],
+          paymentMethod: "",
         },
       };
     }
@@ -80,6 +85,12 @@ const reducer = (state: StateType, action: ActionType): StateType => {
           ...state.cart,
           shippingAddress: action.payload,
         },
+      };
+    }
+    case "SAVE_PAYMENT_METHOD": {
+      return {
+        ...state,
+        cart: { ...state.cart, paymentMethod: action.payload },
       };
     }
     default:

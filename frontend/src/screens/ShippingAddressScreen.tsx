@@ -51,7 +51,7 @@ const ShippingAddressScreen = () => {
         country,
       })
     );
-    navigate("/shipping ");
+    navigate("/payment");
   };
 
   useEffect(() => {
