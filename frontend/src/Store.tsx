@@ -11,6 +11,10 @@ type ShippingAddressType = {
 type StateType = {
   userInfo: any;
   cart: {
+    itemsPrice: number;
+    totalPrice: number;
+    taxPrice: number;
+    shippingPrice: number;
     shippingAddress: ShippingAddressType | any;
     cartItems: any[];
     paymentMethod: "PayPal" | "Stripe" | "";
@@ -31,6 +35,10 @@ const initialState: StateType = {
     paymentMethod: localStorage.getItem("paymentMethod")
       ? JSON.parse(localStorage.getItem("paymentMethod") as string)
       : "",
+    taxPrice: 0,
+    shippingPrice: 0,
+    totalPrice: 0,
+    itemsPrice: 0,
   },
 };
 
@@ -72,6 +80,7 @@ const reducer = (state: StateType, action: ActionType): StateType => {
         ...state,
         userInfo: null,
         cart: {
+          ...state.cart,
           shippingAddress: {},
           cartItems: [],
           paymentMethod: "",
