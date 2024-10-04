@@ -3,8 +3,9 @@ import { data } from "./data";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import { productRouter } from "./routes/productRoutes";
-import { seedRouter } from "./routes/seedRoutes";
-import { userRouter } from "./routes/userRoutes";
+import seedRouter from "./routes/seedRoutes";
+import userRouter from "./routes/userRoutes";
+import orderRouter from "./routes/orderRouter";
 
 dotenv.config();
 
@@ -25,6 +26,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/api/seed", seedRouter);
 app.use("/api/products", productRouter);
 app.use("/api/users", userRouter);
+app.use("/api/orders");
 
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   res.status(500).send({ message: err.message });
